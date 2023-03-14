@@ -1,26 +1,26 @@
 version: "3"
 
 services:
-  api-server:
-    image: api-server
-    ports:
-      - 5000:5000
-    volumes:
-      - ./mongo_db_demo/server/db:/usr/src/app/db
-      - ./mongo_db_demo/server/models:/usr/src/app/models
-      - ./mongo_db_demo/server/controllers:/usr/src/app/controllers
-      - ./mongo_db_demo/server/routes:/usr/src/app/routes
-      - ./mongo_db_demo/server/index.js:/usr/src/app/index.js
-    depends_on:
-      - standalone
-  standalone:
-    image: mongo:6.0.3
-    ports: 
-      - 27017:27017
-    command: mongod --dbpath /data/db --port 27017 --config /resource/mongod.yml
-    volumes:
-      - ./standalone/config/mongod.yml:/resource/mongod.yml
-      - ./standalone/data:/data/db
+  # api-server:
+  #   image: api-server
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - ./mongo_db_demo/server/db:/usr/src/app/db
+  #     - ./mongo_db_demo/server/models:/usr/src/app/models
+  #     - ./mongo_db_demo/server/controllers:/usr/src/app/controllers
+  #     - ./mongo_db_demo/server/routes:/usr/src/app/routes
+  #     - ./mongo_db_demo/server/index.js:/usr/src/app/index.js
+  #   depends_on:
+  #     - standalone
+  # standalone:
+  #   image: mongo:6.0.3
+  #   ports: 
+  #     - 27017:27017
+  #   command: mongod --dbpath /data/db --port 27017 --config /resource/mongod.yml
+  #   volumes:
+  #     - ./standalone/config/mongod.yml:/resource/mongod.yml
+  #     - ./standalone/data:/data/db
 
   app:
     container_name: gpt-ai-assistant
