@@ -7,3 +7,12 @@ services:
     restart: always
     ports:
       - "${APP_PORT}:${APP_PORT}"
+
+  webserver:
+    image: nginx:1.23.3
+    volumes:
+     - ./sites-enabled/:/etc/nginx/conf.d/
+    depends_on:
+    - app
+    ports:
+    - 80:3000
