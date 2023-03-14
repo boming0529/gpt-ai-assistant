@@ -8,26 +8,44 @@ services:
     ports:
       - "${APP_PORT}:${APP_PORT}"
 
-  webserver:
-    image: nginx:1.23.3
-    # volumes:
-    #  - ./sites-enabled/:/etc/nginx/conf.d/
+  nginx:
+    image: jonasal/nginx-certbot:latest
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=michael@2beasy.com.tw
+    # env_file:
+    #   - ./nginx-certbot.env
     depends_on:
-    - app
+      - app
     ports:
-    - 80:80
-    # - 443:443
-    restart: always
+      - 80:80
+      - 443:443
     volumes:
-      - ./sites-enabled/:/etc/nginx/conf.d/:ro
+      - ./certbot:/etc/letsencrypt
+      - ./sites-enabled:/etc/nginx/user_conf.d
+
+volumes:
+  nginx_secrets:
+
+  # webserver:
+  #   image: nginx:1.23.3
+  #   # volumes:
+  #   #  - ./sites-enabled/:/etc/nginx/conf.d/
+  #   depends_on:
+  #   - app
+  #   ports:
+  #   - 80:80
+  #   # - 443:443
+  #   restart: always
+  #   volumes:
+  #     - ./sites-enabled/:/etc/nginx/conf.d/:ro
   #     - ./certbot/www:/var/www/certbot/:ro
   #     - ./certbot/conf/:/etc/nginx/ssl/:ro
-  certbot:
-      image: certbot/certbot:latest
-      volumes:
-        - ./certbot/www/:/var/www/certbot/
-        - ./certbot/conf/:/etc/letsencrypt/
-      ports:
-        - 80:80
-
+  # certbot:
+  #     image: certbot/certbot:latest
+  #     volumes:
+  #       - ./certbot/www/:/var/www/certbot/
+  #       - ./certbot/conf/:/etc/letsencrypt/
+  #     ports:
+  #       - 80:80
 
