@@ -3,3 +3,6 @@ node_modules
 .env
 .env.*
 certbot/
+
+mongo_db_demo/
+standalone/
